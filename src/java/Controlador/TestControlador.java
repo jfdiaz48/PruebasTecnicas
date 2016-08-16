@@ -11,20 +11,25 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import Modelo.*;
 import java.util.List;
+import java.util.Map;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 
 @Named(value = "testControlador")
 @SessionScoped
 public class TestControlador implements Serializable {
 
-    
+   private List<Preguntas> arrayPreguntas = new ArrayList<>();
    private int estados;
+   private int puntuacion;
     
     public TestControlador() {
     }
     
     public List<Preguntas> llenarArrayPreguntas(){
-        List<Preguntas> arrayPreguntas = new ArrayList<>();
+        if (arrayPreguntas.size()<25) {        
         Preguntas pregunta = new Preguntas ();
         pregunta.setPalabraDerecha("lhzrgufuhr");
         pregunta.setPalabraIzquierda("lhzfgufuhr");
@@ -149,9 +154,29 @@ public class TestControlador implements Serializable {
         pregunta25.setPalabraDerecha("nylbemszuc");
         pregunta25.setPalabraIzquierda("nylbemszuc");
         pregunta25.setRespuesta(true);
-        arrayPreguntas.add(pregunta25);
+        arrayPreguntas.add(pregunta25);}
         return arrayPreguntas;
     }
+    
+    public void realizarPrueba(){
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        Map params = externalContext.getRequestParameterMap();
+        HttpServletRequest httpServletRequest = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+        
+        for (int i = 0; i< arrayPreguntas.size(); i++) {
+            String valor  = (String) params.get("switch"+i);
+            if (valor == null && arrayPreguntas.get(i).isRespuesta() == false) {
+                puntuacion +=1;
+            }
+            if (valor != null && arrayPreguntas.get(i).isRespuesta() == true) {
+                puntuacion +=1;
+            }
+        }
+        int lol;
+        lol=0;
+    }
+    
     
     public void empezarPrueba (){
         estados=1;
