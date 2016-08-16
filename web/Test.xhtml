@@ -157,43 +157,52 @@
         </style>
         <!-- Header -->
         <header>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="intro-text">
-                            <h2>Información de la Prueba</h2>
-                            <hr class="star-primary"/>
-                            <h4> La prueba consiste de 30 puntos, cada punto tiene 2 palabras casi iguales o distintas. Su función es responder si la palabra de laizquierda es igual o dstinta de la derecha en el switch</h4>
+            <c:if test="#{testControlador.estados != 1}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="intro-text">
+                                <h2>Información de la Prueba</h2>
+                                <hr class="star-primary"/>
+                                <h4> La prueba consiste de 30 puntos, cada punto tiene 2 palabras casi iguales o distintas. Su función es responder si la palabra de laizquierda es igual o dstinta de la derecha en el switch</h4>
+                                <h:form>
+                                    <h:commandButton class="btn botonesnav" style="background: #2C3E50; width: 200px; height: 50px" value="Empezar Prueba" action="#{testControlador.empezarPrueba()}" title="Eliminar respuesta">
+                                        <i class="fa fa-times fa-lg"></i>
+                                    </h:commandButton>
+                                </h:form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </c:if>
         </header>
 
         <!-- Portfolio Grid Section -->
-        <section id="portfolio">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <h2>Información de la Prueba </h2>
-                        <h:form>
-                            <c:forEach var="preguntas" items="#{testControlador.llenarArrayPreguntas()}" varStatus="status" >
-                                <center>
-                                    <tr><h4 style="display: inline-block">#{preguntas.palabraIzquierda}                            
-                                            <label class="switch" style="display: inline-block">
-                                                <input class="switch-input" type="checkbox" id="switch#{status.index}" />
-                                                <span class="switch-label" data-on="Igual" data-off="Diferente"></span> 
-                                                <span class="switch-handle"></span>                                     
-                                            </label>#{preguntas.palabraDerecha}
-                                        </h4>
-                                    </tr>
-                                </center>                           
-                            </c:forEach>
-                        </h:form>
+        <c:if test="#{testControlador.estados == 1}">
+            <section id="portfolio">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <h2>Información de la Prueba </h2>
+                            <h:form>
+                                <c:forEach var="preguntas" items="#{testControlador.llenarArrayPreguntas()}" varStatus="status" >
+                                    <center>
+                                        <tr><h4 style="display: inline-block">#{preguntas.palabraIzquierda}                            
+                                                <label class="switch" style="display: inline-block">
+                                                    <input class="switch-input" type="checkbox" id="switch#{status.index}" />
+                                                    <span class="switch-label" data-on="Igual" data-off="Diferente"></span> 
+                                                    <span class="switch-handle"></span>                                     
+                                                </label>#{preguntas.palabraDerecha}
+                                            </h4>
+                                        </tr>
+                                    </center>                           
+                                </c:forEach>
+                            </h:form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section> 
+            </section> 
+        </c:if>
         <!-- Footer -->
         <footer class="text-center">
             <div class="footer-above">
