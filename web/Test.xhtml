@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -157,14 +158,14 @@
         </style>
         <!-- Header -->
         <header>
-            <c:if test="#{testControlador.estados != 1}">
+            <c:if test="#{testControlador.estados == 2}">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="intro-text">
                                 <h2>Información de la Prueba</h2>
                                 <hr class="star-primary"/>
-                                <h4> La prueba consiste de 30 puntos, cada punto tiene 2 palabras casi iguales o distintas. Su función es responder si la palabra de laizquierda es igual o dstinta de la derecha en el switch</h4>
+                                <h4> La prueba consiste de 30 puntos, cada punto tiene 2 palabras casi iguales o distintas. Su función es responder si la palabra de laizquierda es igual o dstinta de la derecha en el switch. Dispone de un tiempo de 2 minutos</h4>
                                 <h:form>
                                     <h:commandButton class="btn botonesnav" style="background: #2C3E50; width: 200px; height: 50px" value="Empezar Prueba" action="#{testControlador.empezarPrueba()}" title="Eliminar respuesta">
                                         <i class="fa fa-times fa-lg"></i>
@@ -185,6 +186,12 @@
                         <div class="col-lg-12 text-center">
                             <br/>
                             <h2> Prueba </h2>
+                            <h3 style="padding-left: 900px; position: fixed; padding-top: 0px; top: 110px;">
+                            <h:form>
+                                <h:outputText id="txt_count" value="Su tiempos es #{testControlador.number} segundos" />
+                                <p:poll interval="1" listener="#{testControlador.increment()}" update="txt_count" />
+                            </h:form>
+                            </h3>
                             <h:form>
                                 <c:forEach var="preguntas" items="#{testControlador.llenarArrayPreguntas()}" varStatus="status" >
                                     <center>
